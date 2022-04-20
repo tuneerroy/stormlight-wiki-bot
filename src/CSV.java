@@ -1,18 +1,29 @@
 package src;
 
 import java.io.*;
+import java.util.List;
+import java.util.Map;
 
 public class CSV {
     /**
      * Scrapes flag data off CIA website by visiting each country in region name and grabbing
      * url for each flag. Compiles data into src.CSV file named 'flagURL.csv'.
      *
-     * @param fileName region name
+     * @param fileName filename
      * @throws IOException if problem with writing data into {@param fileName}
      */
-    public static void inputIntoCSV(String fileName, String data) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
-        writer.write(data);
+    public static void inputIntoCSV(String fileName, Map<String, List<String>> data)
+            throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, List<String>> entry : data.entrySet()) {
+            sb.append(entry.getKey()).append(",");
+            for (String val : entry.getValue()) {
+                sb.append(val).append(",");
+            }
+            sb.append("\n");
+        }
+        writer.write(sb.toString());
         writer.flush();
     }
 

@@ -35,10 +35,10 @@ public class Scraper {
     public Set<String> getATags() {
         Set<String> res = new HashSet<>();
         for (String href : doc.select("a").eachAttr("href")) {
-            if (href.startsWith("/wiki")) {
-                res.add("https://stormlightarchive.fandom.com" + href);
-            } else if (href.startsWith("https://stormlightarchive")) {
-                res.add(href);
+            if (href.startsWith("/wiki/")) {
+                res.add(href.substring(6));
+            } else if (href.startsWith("https://stormlightarchive.fandom.com/wiki/")) {
+                res.add(href.substring(42));
             }
         }
         return res;
